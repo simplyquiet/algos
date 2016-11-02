@@ -2,7 +2,7 @@
 #include <cstdlib>//for "exit()" on some systems
 #include <vector>
 #include <string>
-
+#include <fstream>
 using namespace std;
 
 /**
@@ -14,7 +14,18 @@ using namespace std;
 */
 
 //auto linearSearch...
+int linearSearch (auto inputs,auto search_key)
+{
+	for (int i=0; i<inputs.size(); i++)
+	{
+		if (inputs[i] == search_key)
+		{
+			return i;
+		}
+	}
 
+	return -1;
+}
 
 int main()
 {
@@ -24,9 +35,18 @@ int main()
 
    cout<<"Welcome to \"search it\". We first need some input data."<<endl;
    cout<<"We'll assume the inputs do not have any spaces."<<endl;
-   cout<<"\nTo end input type Ctrl + D"<<endl<<endl;
+   //cout<<"\nTo end input type Ctrl + D"<<endl<<endl;
 
-    while(cin>>input)//read an unknown number of inputs
+
+	ifstream infile {"top1Mweb"}; //create an input file handle to the file input
+	if(!infile) //test if the handle was created successfully
+	{
+		cout<<"Error reading from file bin/data/input"<<endl;
+		return -1;
+	}
+	else
+	//infile>>input; //read from the file
+	while(infile>>input)//read an unknown number of inputs
     {
        inputs.push_back(input);
     }
@@ -43,7 +63,7 @@ int main()
 
     while(cin>>search_key)//perform searches until Ctrl + D entered
     {
-        result = linearSearch(inputs,search_key);
+ 	result = linearSearch(inputs,search_key);
 
         cout<<"  "<<search_key<<" was ";
 
